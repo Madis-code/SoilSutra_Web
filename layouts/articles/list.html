@@ -1,0 +1,18 @@
+{{ define "main" }}
+<div class="narrow page">
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+  <ul class="list">
+    {{ range (.Pages.ByParam "updated").Reverse }}
+    <li>
+      <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+      <p>{{ .Params.summary }}</p>
+      <p class="meta"><span>{{ .Params.sources }} sources</span><span>Updated {{ .Params.updated | time.Format "2 Jan 2006" }}</span></p>
+    </li>
+    {{ else }}
+    <li><p>No guides are published yet. The first one is on feedstock.</p></li>
+    {{ end }}
+  </ul>
+  {{ partial "signup.html" . }}
+</div>
+{{ end }}

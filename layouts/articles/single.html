@@ -1,0 +1,23 @@
+{{ define "main" }}
+<article class="narrow article">
+  {{ if .Draft }}<p class="draft-banner">Draft. A person has not reviewed this article yet, so it is not public.</p>{{ end }}
+  <h1>{{ .Title }}</h1>
+  <p class="meta"><span>Updated {{ .Params.updated | time.Format "2 Jan 2006" }}</span><span>{{ .Params.sources }} sources</span></p>
+  <div class="prose">{{ .Content }}</div>
+
+  <section class="sources" aria-labelledby="sources-h">
+    <h2 id="sources-h">Sources</h2>
+    <p class="note">The quotes are copied from each page. A program checks that each quote is on the page, and that the numbers and names in our sentences appear in the sources they cite. A person reads the article before it goes live. <a href="{{ "how-we-check/" | relURL }}">How we check</a></p>
+    <ol>
+      {{ range .Params.references }}
+      <li id="s{{ .n }}">
+        <p class="host">{{ .host }}</p>
+        <a class="src-title" href="{{ .url }}" rel="noopener">{{ if eq .title .host }}Open the source page{{ else }}{{ .title }}{{ end }}</a>
+        <blockquote>{{ .quote }}</blockquote>
+      </li>
+      {{ end }}
+    </ol>
+  </section>
+  {{ partial "signup.html" . }}
+</article>
+{{ end }}

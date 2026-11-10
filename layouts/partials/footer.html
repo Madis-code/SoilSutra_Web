@@ -1,0 +1,8 @@
+<footer class="ground foot">
+  <div class="wrap">
+    <p>SoilSutra publishes vermicompost research in plain language. Each sentence shows the page it came from and the exact words we relied on.</p>
+    <p>This is general information, not advice for your site. Check the source before you act on a number.</p>
+    {{ with site.Params.contactEmail }}<p>Write to <a href="mailto:{{ . }}">{{ . }}</a></p>{{ end }}
+    <p>&copy; {{ now.Year }} SoilSutra</p>
+  </div>
+</footer>

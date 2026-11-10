@@ -1,0 +1,14 @@
+<header class="ground">
+  <div class="wrap top">
+    <a class="brand" href="{{ "/" | relURL }}">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18c8 0 4-6.5 8-8.5s4.5-2.5 6-3.5" fill="none" stroke="#e8b9b3" stroke-width="2.6" stroke-linecap="round"/></svg>
+      SoilSutra
+    </a>
+    <nav class="nav" aria-label="Main">
+      {{ $here := . }}
+      {{ range site.Menus.main }}
+        <a href="{{ .URL }}"{{ if or ($here.IsMenuCurrent "main" .) ($here.HasMenuCurrent "main" .) }} aria-current="page"{{ end }}>{{ .Name }}</a>
+      {{ end }}
+    </nav>
+  </div>
+</header>

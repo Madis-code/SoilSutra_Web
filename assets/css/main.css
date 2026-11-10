@@ -1,0 +1,145 @@
+/* SoilSutra. Soil-profile palette: humus (dark ground), lichen (page), moss (links), worm pink (every source marker).
+   Fonts: Literata for reading, Bricolage Grotesque for headings and interface. Both self-hosted, open licence. */
+
+:root {
+  --lichen: #eef0e8;
+  --panel: #e3e7da;
+  --ink: #232a1e;
+  --muted: #5d6354;
+  --rule: #cfd5c2;
+  --humus: #35291e;
+  --humus-ink: #efe9dc;
+  --moss: #2f5e2b;
+  --moss-ink: #ffffff;
+  --worm: #e8b9b3;
+  --worm-ink: #54231f;
+  --focus: #1b4fd1;
+  --read: "Literata", "Charter", "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+  --ui: "Bricolage Grotesque", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --lichen: #171a14;
+    --panel: #22271d;
+    --ink: #e6e9dd;
+    --muted: #a3a994;
+    --rule: #333a2b;
+    --humus: #0f0d09;
+    --humus-ink: #e8e2d4;
+    --moss: #9fcf8f;
+    --moss-ink: #12200f;
+    --worm: #7a4a45;
+    --worm-ink: #fbe4e1;
+    --focus: #8fb0ff;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--lichen); color: var(--ink);
+  font: 1.0625rem/1.65 var(--read); font-optical-sizing: auto;
+  min-height: 100vh; display: flex; flex-direction: column;
+}
+main { flex: 1; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 2px; }
+a { color: var(--moss); text-underline-offset: .18em; text-decoration-thickness: .08em; }
+a:hover { text-decoration-thickness: .16em; }
+img, svg { max-width: 100%; }
+
+.wrap { width: min(100% - 2rem, 62rem); margin-inline: auto; }
+.narrow { width: min(100% - 2rem, 38rem); margin-inline: auto; }
+
+h1, h2, h3 { font-family: var(--ui); line-height: 1.12; letter-spacing: -.012em; margin: 0; }
+h1 { font-size: clamp(2.1rem, 7.4vw, 3.6rem); font-weight: 700; letter-spacing: -.025em; }
+h2 { font-size: clamp(1.4rem, 4.2vw, 1.8rem); font-weight: 650; margin-top: 2.6rem; }
+p { margin: 0 0 1.1em; }
+
+/* ground: the dark band at the top and bottom of every page, like the soil under the page */
+.ground { background: var(--humus); color: var(--humus-ink); }
+.ground a { color: inherit; }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .85rem; flex-wrap: wrap; }
+.brand { display: inline-flex; align-items: center; gap: .5rem; font: 700 1.3rem/1 var(--ui); letter-spacing: -.01em; text-decoration: none; }
+.brand svg { width: 1.5rem; height: 1.5rem; flex: none; }
+.nav { display: flex; gap: .95rem; font: 500 .9rem/1 var(--ui); }
+.nav a { text-decoration: none; padding-block: .5rem; border-bottom: 2px solid transparent; }
+.nav a:hover, .nav a[aria-current="page"] { border-bottom-color: var(--worm); }
+.foot { padding-block: 2rem; margin-top: 4rem; font: .92rem/1.6 var(--ui); }
+.foot p { margin: 0 0 .4em; max-width: 40rem; }
+
+/* hero */
+.hero { padding-block: clamp(2.2rem, 7vw, 4.5rem) clamp(1.8rem, 5vw, 3rem); }
+.hero h1 { max-width: 14ch; }
+.hero .sub { font-size: 1.15rem; max-width: 34rem; margin-top: 1.2rem; color: var(--muted); }
+@media (min-width: 58rem) {
+  .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 3rem; align-items: start; }
+  .hero .proof { margin-top: 0; padding-top: .6rem; }
+}
+
+/* the one memorable thing: a sentence whose source opens in place */
+.proof { margin-top: 2.2rem; max-width: 38rem; }
+.hero .intro { min-width: 0; }
+.proof .sentence { font-size: 1.3rem; line-height: 1.5; margin: 0 0 .6rem; }
+.proof small { display: block; font: .85rem/1.4 var(--ui); color: var(--muted); margin-top: .8rem; }
+
+.prose a[href^="#s"], .proof a[href^="#s"] {
+  display: inline-block; font: 650 .72em/1 var(--ui); background: var(--worm); color: var(--worm-ink);
+  padding: .28em .5em .24em; border-radius: .7em; margin-inline: .12em .05em; vertical-align: .12em; text-decoration: none; cursor: pointer;
+}
+.prose a[href^="#s"]:hover, .proof a[href^="#s"]:hover, a[href^="#s"][aria-expanded="true"] { background: var(--worm-ink); color: var(--worm); }
+
+.evidence { margin: .2rem 0 1.4rem; padding: .85rem 1rem 1rem; background: var(--panel); border-left: 4px solid var(--worm); border-radius: 0 .4rem .4rem 0; font-size: .98rem; line-height: 1.55; }
+.evidence .host { font: 600 .8rem/1.3 var(--ui); color: var(--muted); margin: 0 0 .35rem; }
+.evidence blockquote { margin: 0 0 .55rem; }
+.evidence blockquote::before { content: "\201C"; } .evidence blockquote::after { content: "\201D"; }
+.evidence a { font: 600 .9rem/1.3 var(--ui); }
+
+/* lists */
+.list { list-style: none; margin: 1.6rem 0 0; padding: 0; }
+.list li { border-top: 1px solid var(--rule); padding-block: 1.3rem; }
+.list h3 { font-size: 1.35rem; font-weight: 650; }
+.list h3 a { color: inherit; text-decoration: none; }
+.list h3 a:hover { text-decoration: underline; text-decoration-thickness: .1em; }
+.list p { margin: .45rem 0 .5rem; max-width: 36rem; }
+.meta { display: flex; flex-wrap: wrap; gap: .2rem 1.1rem; font: .86rem/1.4 var(--ui); color: var(--muted); margin: 0; }
+
+section.block { padding-top: 1rem; }
+.cols { display: grid; gap: 1.4rem 2.2rem; margin-top: 1.2rem; }
+@media (min-width: 46rem) { .cols { grid-template-columns: repeat(3, 1fr); } }
+.cols h3 { font-size: 1.1rem; font-weight: 650; margin-bottom: .3rem; }
+.cols p { margin: 0; font-size: 1rem; }
+
+.signup { margin-top: 3.2rem; padding: 1.4rem; background: var(--panel); border-radius: .5rem; max-width: 34rem; }
+.signup h2 { margin: 0 0 .4rem; font-size: 1.3rem; }
+.signup form { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .8rem; }
+.signup input[type=email] { flex: 1 1 14rem; font: 1rem var(--ui); padding: .7rem .8rem; border: 1px solid var(--muted); border-radius: .35rem; background: var(--lichen); color: var(--ink); min-width: 0; }
+.signup button { font: 650 1rem var(--ui); padding: .7rem 1.2rem; border: 0; border-radius: .35rem; background: var(--moss); color: var(--moss-ink); cursor: pointer; }
+.signup button:hover { filter: brightness(1.12); }
+
+/* article */
+.article { padding-block: clamp(1.8rem, 5vw, 3rem) 1rem; }
+.article h1 { font-size: clamp(1.9rem, 6.2vw, 2.9rem); margin-bottom: .9rem; }
+.article .meta { margin-bottom: 1.8rem; }
+.draft-banner { background: var(--worm); color: var(--worm-ink); font: 600 .95rem/1.4 var(--ui); padding: .65rem .9rem; border-radius: .35rem; margin: 0 0 1.4rem; }
+.prose h2 { margin-top: 2.2rem; margin-bottom: .6rem; }
+.prose > p:first-child { font-size: 1.22em; line-height: 1.55; }
+.sources { margin-top: 3rem; border-top: 2px solid var(--ink); padding-top: .2rem; }
+.sources h2 { margin-top: 1.1rem; }
+.sources .note { color: var(--muted); font-size: .95rem; margin-top: .5rem; }
+.sources ol { list-style: none; padding: 0; margin: 1.2rem 0 0; counter-reset: s; }
+.sources li { counter-increment: s; border-top: 1px solid var(--rule); padding: 1rem 0 1rem 2.4rem; position: relative; scroll-margin-top: 1rem; }
+.sources li::before { content: counter(s); position: absolute; left: 0; top: 1rem; width: 1.7rem; height: 1.7rem; display: grid; place-items: center; background: var(--worm); color: var(--worm-ink); border-radius: 50%; font: 650 .8rem/1 var(--ui); }
+.sources li:target { background: var(--panel); }
+.sources .host { font: 600 .8rem/1.3 var(--ui); color: var(--muted); margin: 0 0 .15rem; }
+.sources .src-title { font: 600 1rem/1.35 var(--ui); }
+.sources blockquote { margin: .5rem 0 0; font-size: .96rem; color: var(--muted); }
+.sources blockquote::before { content: "\201C"; } .sources blockquote::after { content: "\201D"; }
+
+.page { padding-block: clamp(1.8rem, 5vw, 3rem) 1rem; }
+.page h1 { font-size: clamp(1.9rem, 6.2vw, 2.7rem); margin-bottom: 1.2rem; }
+.page ul { padding-left: 1.2rem; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .evidence { animation: open .18s ease-out; }
+  @keyframes open { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+}

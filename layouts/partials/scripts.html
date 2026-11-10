@@ -1,0 +1,30 @@
+<script>
+/* A source marker opens the exact words from the source under its paragraph. Without JavaScript it jumps to the source list. */
+(function () {
+  var marks = document.querySelectorAll('.prose a[href^="#s"], .proof a[href^="#s"]');
+  function panel(id) {
+    var li = document.getElementById(id); if (!li) return null;
+    var p = document.createElement('aside'); p.className = 'evidence'; p.setAttribute('role', 'note');
+    var host = li.querySelector('.host'), link = li.querySelector('.src-title'), quote = li.querySelector('blockquote');
+    var h = document.createElement('p'); h.className = 'host'; h.textContent = (host ? host.textContent : '') + ' says:'; p.appendChild(h);
+    var q = document.createElement('blockquote'); q.textContent = quote ? quote.textContent : ''; p.appendChild(q);
+    if (link) { var a = document.createElement('a'); a.href = link.href; a.rel = 'noopener'; a.textContent = 'Open the page'; p.appendChild(a); }
+    return p;
+  }
+  marks.forEach(function (m) {
+    m.setAttribute('role', 'button'); m.setAttribute('aria-expanded', 'false');
+    m.addEventListener('click', function (e) {
+      e.preventDefault();
+      var id = m.getAttribute('href').slice(1), block = m.closest('p');
+      var open = block.nextElementSibling && block.nextElementSibling.classList.contains('evidence') ? block.nextElementSibling : null;
+      var same = open && open.getAttribute('data-for') === id;
+      if (open) { open.remove(); block.querySelectorAll('a[aria-expanded="true"]').forEach(function (x) { x.setAttribute('aria-expanded', 'false'); }); }
+      if (same) return;
+      var p = panel(id); if (!p) return;
+      p.setAttribute('data-for', id); block.after(p); m.setAttribute('aria-expanded', 'true');
+    });
+  });
+  var first = document.querySelector('.proof a[href^="#s"]');      /* the home page shows one source already open */
+  if (first) first.click();
+})();
+</script>

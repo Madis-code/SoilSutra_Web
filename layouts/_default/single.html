@@ -1,0 +1,7 @@
+{{ define "main" }}
+<div class="narrow page">
+  <h1>{{ .Title }}</h1>
+  <div class="prose">{{ .Content }}</div>
+  {{ partial "signup.html" . }}
+</div>
+{{ end }}

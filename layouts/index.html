@@ -1,0 +1,46 @@
+{{ define "main" }}
+{{ $articles := where site.RegularPages "Section" "articles" }}
+<section class="wrap hero">
+  <div class="intro">
+    <h1>{{ .Params.headline }}</h1>
+    <p class="sub">{{ .Params.sub }}</p>
+  </div>
+  {{ with $articles }}{{ $a := index (.ByParam "updated").Reverse 0 }}{{ with $a.Params.lede }}
+  <div class="proof">
+    <p class="sentence">{{ . }}{{ range $a.Params.lede_refs }} <a href="#s{{ . }}">{{ . }}</a>{{ end }}</p>
+    <small>Tap the pink number to see the exact words and the page they came from.</small>
+    <ol hidden>
+      {{ range $a.Params.references }}<li id="s{{ .n }}"><p class="host">{{ .host }}</p><a class="src-title" href="{{ .url }}">{{ if eq .title .host }}Open the source page{{ else }}{{ .title }}{{ end }}</a><blockquote>{{ .quote }}</blockquote></li>{{ end }}
+    </ol>
+  </div>
+  {{ end }}{{ end }}
+</section>
+
+<div class="wrap">
+  {{ if $articles }}
+  <section class="block" aria-labelledby="guides-h">
+    <h2 id="guides-h" style="margin-top:1rem">Guides</h2>
+    <ul class="list">
+      {{ range ($articles.ByParam "updated").Reverse }}
+      <li>
+        <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+        <p>{{ .Params.summary }}</p>
+        <p class="meta"><span>{{ .Params.sources }} sources</span><span>Updated {{ .Params.updated | time.Format "2 Jan 2006" }}</span></p>
+      </li>
+      {{ end }}
+    </ul>
+  </section>
+  {{ end }}
+
+  <section class="block" aria-labelledby="work-h">
+    <h2 id="work-h">If you make vermicompost</h2>
+    <div class="cols">
+      <div><h3>Read the research</h3><p>Free guides on feedstock, worms, process control and quality, written from published sources.</p></div>
+      <div><h3>Check your own numbers</h3><p>Calculators for common questions are planned. Each will show the source behind its formula.</p></div>
+      <div><h3>Ask for help</h3><p>For your own site, SoilSutra can review your process and suggest what to measure first.</p></div>
+    </div>
+  </section>
+
+  {{ partial "signup.html" . }}
+</div>
+{{ end }}
