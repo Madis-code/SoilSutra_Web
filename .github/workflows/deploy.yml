@@ -2,6 +2,8 @@ name: Build and deploy
 
 # Builds the site with Hugo on every push to main and publishes it to GitHub Pages.
 # Drafts (draft: true in an article's front matter) are NOT built, so an unreviewed article never goes live.
+# A second guard fails the run if an article has draft: false but is not status: approved
+# (the one-line-flip mistake: the README says to change BOTH lines).
 
 on:
   push:
@@ -20,23 +22,37 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     env:
-      HUGO_VERSION: 0.169.0
+      HUGO_VERSION: 0.169.0 # confirm this tag exists at github.com/gohugoio/hugo/releases
+      HUGO_ENVIRONMENT: production
     steps:
+      - uses: actions/checkout@v4
+
+      - name: Block unreviewed articles
+        run: |
+          fail=0
+          for f in content/articles/*.md; do
+            [ "$(basename "$f")" = "_index.md" ] && continue
+            if grep -q '^draft: false' "$f" && ! grep -q '^status: approved' "$f"; then
+              echo "::error file=$f::draft is false but status is not approved. Set status: approved only after review."
+              fail=1
+            fi
+          done
+          exit $fail
+
       - name: Install Hugo
         run: |
-          wget -q -O "${{ runner.temp }}/hugo.deb" "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
-          sudo dpkg -i "${{ runner.temp }}/hugo.deb"
-      - uses: actions/checkout@v4
+          wget -q -O "$RUNNER_TEMP/hugo.deb" "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          sudo dpkg -i "$RUNNER_TEMP/hugo.deb"
+          hugo version
+
       - uses: actions/configure-pages@v5
         id: pages
+
       - name: Build
-        run: hugo --gc --minify
-      - name: Fail if a draft reached the build
-        run: |
-          if grep -rl "has not reviewed this article" public; then
-            echo "A draft article was built. Set draft: false and status: approved only after review."; exit 1
-          fi
+        run: hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./public
