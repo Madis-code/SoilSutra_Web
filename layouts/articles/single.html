@@ -1,6 +1,11 @@
 {{ define "main" }}
+{{ $lp := partialCached "learning-path.html" . }}
+{{ $topic := .Params.topic | default "" }}
 <article class="narrow article">
   {{ if .Draft }}<p class="draft-banner">Draft. A person has not reviewed this article yet, so it is not public.</p>{{ end }}
+  {{ range $i, $s := $lp.stages }}{{ if not $s.extra }}{{ range $s.topics }}{{ if eq .key $topic }}
+  <p class="crumb"><a href="{{ "articles/" | relURL }}#path-{{ $s.slug }}">Stage {{ add $i 1 }} of {{ $lp.count }}: {{ $s.title }}</a><span class="gauge" aria-hidden="true">{{ range seq 4 }}<i{{ if le . $s.rank }} class="on"{{ end }}></i>{{ end }}</span>{{ $s.level | title }}</p>
+  {{ end }}{{ end }}{{ end }}{{ end }}
   <h1>{{ .Title }}</h1>
   <p class="meta"><span>Updated {{ .Params.updated | time.Format "2 Jan 2006" }}</span><span>{{ .Params.sources }} sources</span></p>
   <div class="prose">{{ .Content }}</div>

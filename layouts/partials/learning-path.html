@@ -1,0 +1,53 @@
+{{- /*
+  Builds the learning path from data/learning_path.yaml and the published guides.
+  Call it as: partialCached "learning-path.html" .   (it does not depend on the page it is called from)
+  Returns a dict:
+    stages  - the stages in order. Each has: slug, title, level, rank (1-4), blurb, topics, done, total, extra.
+              topics is a list of {key, title, pages}; pages is empty while the topic is only planned.
+              done = topics with at least one published guide. extra = true for the "Other guides" stage.
+    count   - number of real stages (not counting "Other guides")
+    default - slug of the stage to open first: the first one that has a published guide
+*/ -}}
+{{- $data := hugo.Data.learning_path -}}
+{{- if not $data -}}{{- errorf "data/learning_path.yaml is missing. The Guides page is built from it." -}}{{- end -}}
+{{- $articles := where site.RegularPages "Section" "articles" -}}
+{{- $levels := dict "beginner" 1 "intermediate" 2 "advanced" 3 "expert" 4 -}}
+{{- $known := slice -}}
+{{- $stages := slice -}}
+{{- $default := "" -}}
+
+{{- range $data.stages -}}
+  {{- $s := . -}}
+  {{- $topics := slice -}}
+  {{- $done := 0 -}}
+  {{- range $s.topics -}}
+    {{- $known = $known | append .key -}}
+    {{- $pages := ((where $articles "Params.topic" .key).ByParam "updated").Reverse -}}
+    {{- if $pages -}}
+      {{- $done = add $done 1 -}}
+      {{- if not $default }}{{ $default = $s.slug }}{{ end -}}
+    {{- end -}}
+    {{- $topics = $topics | append (dict "key" .key "title" .title "pages" $pages) -}}
+  {{- end -}}
+  {{- $rank := index $levels $s.level | default 1 -}}
+  {{- $stages = $stages | append (dict "slug" $s.slug "title" $s.title "level" $s.level "rank" $rank "blurb" $s.blurb "topics" $topics "done" $done "total" (len $s.topics) "extra" false) -}}
+{{- end -}}
+
+{{- /* A guide whose topic is not on the path must not vanish: list it under "Other guides" and warn. */ -}}
+{{- $extras := slice -}}
+{{- range ($articles.ByParam "updated").Reverse -}}
+  {{- $t := .Params.topic | default "" -}}
+  {{- if not (in $known $t) -}}
+    {{- warnf "Guide %s has topic %q, which is not in data/learning_path.yaml. It is listed under Other guides." .RelPermalink $t -}}
+    {{- $extras = $extras | append (dict "key" $t "title" .Title "pages" (slice .)) -}}
+  {{- end -}}
+{{- end -}}
+{{- if $extras -}}
+  {{- $stages = $stages | append (dict "slug" "other" "title" "Other guides" "level" "" "rank" 0 "blurb" "Guides that are not placed on the path yet." "topics" $extras "done" (len $extras) "total" (len $extras) "extra" true) -}}
+{{- end -}}
+
+{{- if and (not $default) $stages -}}
+  {{- with index $stages 0 }}{{ $default = .slug }}{{ end -}}
+{{- end -}}
+
+{{- return (dict "stages" $stages "count" (len $data.stages) "default" $default) -}}

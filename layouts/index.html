@@ -1,5 +1,6 @@
 {{ define "main" }}
 {{ $articles := where site.RegularPages "Section" "articles" }}
+{{ $lp := partialCached "learning-path.html" . }}
 <section class="wrap hero">
   <div class="intro">
     <h1>{{ .Params.headline }}</h1>
@@ -17,11 +18,30 @@
 </section>
 
 <div class="wrap">
+  {{ if $lp.stages }}
+  <section class="block" aria-labelledby="path-h">
+    <h2 id="path-h" style="margin-top:1rem">Learn in order</h2>
+    <p class="lead-in">The path has {{ $lp.count }} stages, from setting up your first bed to the chemistry of the finished product. Start at the first one, or jump to where you are.</p>
+    <ol class="steps">
+      {{ range $i, $s := $lp.stages }}{{ if not $s.extra }}
+      <li>
+        <a href="{{ "articles/" | relURL }}#path-{{ $s.slug }}"{{ if not $s.done }} class="empty"{{ end }}>
+          <span class="n">{{ add $i 1 }}</span>
+          <span class="t">{{ $s.title }}</span>
+          <span class="lv"><span class="gauge" aria-hidden="true">{{ range seq 4 }}<i{{ if le . $s.rank }} class="on"{{ end }}></i>{{ end }}</span>{{ $s.level | title }}</span>
+          <span class="st">{{ if $s.done }}{{ $s.done }} of {{ $s.total }} topics covered{{ else }}In research{{ end }}</span>
+        </a>
+      </li>
+      {{ end }}{{ end }}
+    </ol>
+  </section>
+  {{ end }}
+
   {{ if $articles }}
   <section class="block" aria-labelledby="guides-h">
-    <h2 id="guides-h" style="margin-top:1rem">Guides</h2>
+    <h2 id="guides-h">Latest guides</h2>
     <ul class="list">
-      {{ range ($articles.ByParam "updated").Reverse }}
+      {{ range first 3 (($articles.ByParam "updated").Reverse) }}
       <li>
         <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
         <p>{{ .Params.summary }}</p>
@@ -29,6 +49,7 @@
       </li>
       {{ end }}
     </ul>
+    <p class="more"><a href="{{ "articles/" | relURL }}">All guides, by stage</a></p>
   </section>
   {{ end }}
 

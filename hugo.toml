@@ -12,6 +12,8 @@ enableRobotsTXT = true
   signupAction = ""
   # A public contact address, shown in the footer and on the About page. Empty = not shown.
   contactEmail = ""
+  # Guides page: list topics that are planned but not yet published. false = show only published guides.
+  showPlannedTopics = true
 
 [menus]
   [[menus.main]]

@@ -1,0 +1,122 @@
+# The SoilSutra learning path: the tabs on the Guides page, in order from beginner to expert.
+#
+# How it works
+# - A guide appears under a stage when its front matter `topic:` equals a topic `key` below.
+# - A topic with no published guide yet is listed as "planned" (hide these with showPlannedTopics = false in hugo.toml).
+# - A guide whose topic is not listed here still appears, under "Other guides", and the build prints a warning.
+# - Edit freely: rename, reorder, add or remove stages and topics. The page follows this file.
+# - level is one of: beginner, intermediate, advanced, expert.
+# - Titles and blurbs only say what a stage covers. They never state facts; facts live in the sourced guides.
+
+stages:
+  - slug: basics
+    title: Basics
+    level: beginner
+    blurb: What vermicompost is, how it differs from ordinary compost, and which worms do the work.
+    topics:
+      - key: what-is-vermicompost
+        title: What vermicompost is
+      - key: worm-species
+        title: Worm species for composting
+      - key: vermicompost-vs-compost
+        title: Vermicompost compared with ordinary compost
+
+  - slug: setup
+    title: Setup
+    level: beginner
+    blurb: Choosing a system, preparing bedding and a site, and starting your first batch.
+    topics:
+      - key: system-types
+        title: "Choosing a system: bins, beds and flow-through"
+      - key: bedding
+        title: Bedding
+      - key: site-and-climate
+        title: Site, shade and climate
+      - key: first-batch
+        title: Starting your first batch
+
+  - slug: feeding
+    title: Feeding
+    level: beginner
+    blurb: What to feed worms, what to keep out, and how to prepare feedstock.
+    topics:
+      - key: feedstock
+        title: Feedstocks for worms
+      - key: feeding-rate
+        title: How much and how often to feed
+      - key: pre-composting
+        title: Pre-composting feedstock
+
+  - slug: process
+    title: Process control
+    level: intermediate
+    blurb: Keeping the bed healthy day to day, and fixing it when it is not.
+    topics:
+      - key: moisture
+        title: Moisture
+      - key: temperature
+        title: Temperature
+      - key: ph-aeration
+        title: pH and aeration
+      - key: worm-density
+        title: Worm density and population
+      - key: troubleshooting
+        title: Pests, odours and other problems
+
+  - slug: harvest
+    title: Harvest and use
+    level: intermediate
+    blurb: Separating the finished product, storing it, and using it on crops.
+    topics:
+      - key: harvesting
+        title: Harvesting methods
+      - key: curing-storage
+        title: Curing and storage
+      - key: application
+        title: Using vermicompost on crops
+      - key: liquid-extracts
+        title: Liquid extracts
+
+  - slug: scale
+    title: Scale and automation
+    level: advanced
+    blurb: Moving from a few bins to a production line, and what to measure and automate.
+    topics:
+      - key: commercial-systems
+        title: Commercial systems
+      - key: sensors
+        title: Sensors and monitoring
+      - key: automation
+        title: Automation and control
+      - key: economics
+        title: Costs and economics
+
+  - slug: quality
+    title: Quality and testing
+    level: advanced
+    blurb: Judging maturity and safety, the standards that apply, and which lab tests to run.
+    topics:
+      - key: maturity-stability
+        title: Maturity and stability
+      - key: contaminants
+        title: Pathogens and contaminants
+      - key: standards
+        title: Standards and labelling
+      - key: lab-testing
+        title: Sampling and lab tests
+
+  - slug: composition
+    title: Composition science
+    level: expert
+    blurb: What vermicompost is made of and why it works, at the level of chemistry and biology.
+    topics:
+      - key: nutrient-content
+        title: Nutrient content
+      - key: humic-substances
+        title: Organic matter and humic substances
+      - key: microbial-communities
+        title: Microbial communities
+      - key: enzymes-hormones
+        title: Enzymes and plant growth regulators
+      - key: nutrient-transformations
+        title: Nutrient transformations during vermicomposting

@@ -1,0 +1,71 @@
+<script>
+/* Learning-path tabs. Without JavaScript every stage is a section shown in order, and the rail is a list of jump links.
+   With JavaScript the rail becomes tabs: one stage at a time, arrow keys move between them, and the address (#path-setup) can be shared. */
+(function () {
+  var root = document.querySelector('[data-tabs]'); if (!root) return;
+  var list = root.querySelector('[data-tablist]');
+  var tabs = Array.prototype.slice.call(root.querySelectorAll('[data-tab]'));
+  var panels = Array.prototype.slice.call(root.querySelectorAll('[data-panel]'));
+  if (!list || !tabs.length || tabs.length !== panels.length) return;
+
+  root.classList.add('tabs-on');
+  list.setAttribute('role', 'tablist');
+  tabs.forEach(function (t) {
+    var slug = t.getAttribute('data-tab');
+    t.id = 'tab-' + slug; t.setAttribute('role', 'tab'); t.setAttribute('aria-controls', 'path-' + slug);
+  });
+  panels.forEach(function (p) {
+    var slug = p.getAttribute('data-panel');
+    p.setAttribute('role', 'tabpanel'); p.setAttribute('aria-labelledby', 'tab-' + slug);
+  });
+
+  function has(slug) { return tabs.some(function (t) { return t.getAttribute('data-tab') === slug; }); }
+  function fromHash() {
+    var h = ''; try { h = decodeURIComponent(location.hash.slice(1)); } catch (e) {}
+    return h.indexOf('path-') === 0 ? h.slice(5) : '';
+  }
+  function show(slug, focus) {
+    tabs.forEach(function (t) {
+      var on = t.getAttribute('data-tab') === slug;
+      t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1;
+      if (on) {
+        if (focus) t.focus();
+        if (list.scrollWidth > list.clientWidth) list.scrollLeft = t.offsetLeft - (list.clientWidth - t.offsetWidth) / 2;
+      }
+    });
+    panels.forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== slug; });
+  }
+  function go(slug, focus) {
+    show(slug, focus);
+    try { history.pushState(null, '', '#path-' + slug); } catch (e) {}
+  }
+
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function (e) { e.preventDefault(); go(t.getAttribute('data-tab'), false); });
+    t.addEventListener('keydown', function (e) {
+      var j = -1, n = tabs.length;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') j = (i + 1) % n;
+      else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') j = (i - 1 + n) % n;
+      else if (e.key === 'Home') j = 0;
+      else if (e.key === 'End') j = n - 1;
+      if (j < 0) return;
+      e.preventDefault(); go(tabs[j].getAttribute('data-tab'), true);
+    });
+  });
+  Array.prototype.forEach.call(root.querySelectorAll('[data-go]'), function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault(); go(a.getAttribute('data-go'), false); root.scrollIntoView();
+    });
+  });
+
+  function sync() { var s = fromHash(); if (has(s)) show(s, false); }
+  window.addEventListener('popstate', sync); window.addEventListener('hashchange', sync);
+
+  var start = fromHash();
+  if (!has(start)) start = root.getAttribute('data-default');
+  if (!has(start)) start = tabs[0].getAttribute('data-tab');
+  show(start, false);
+  /* arriving by a stage link: keep the tab row in view instead of landing on the stage heading */
+  if (has(fromHash())) window.addEventListener('load', function () { root.scrollIntoView(); });
+})();
+</script>
