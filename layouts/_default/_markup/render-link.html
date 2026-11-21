@@ -1,0 +1,8 @@
+{{- /*
+  Links written in Markdown.
+  A bare "#s3" must stay "#s3": the source markers in the article text are matched by that exact form
+  (the evidence panel script and the marker styling both look for it). Hugo's default would turn it
+  into "/articles/feedstock/#s3", which still jumps correctly but loses the panel and the styling.
+*/ -}}
+<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if findRE `^https?://` .Destination }} rel="noopener"{{ end }}>{{ .Text | safeHTML }}</a>
+{{- /* trim */ -}}

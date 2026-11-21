@@ -1,14 +1,15 @@
 <script>
 /* A source marker opens the exact words from the source under its paragraph. Without JavaScript it jumps to the source list. */
 (function () {
+  var T = { says: {{ i18n "evidence_says" (dict "host" "{host}") | jsonify | safeJS }}, open: {{ i18n "open_page" | jsonify | safeJS }} };
   var marks = document.querySelectorAll('.prose a[href^="#s"], .proof a[href^="#s"]');
   function panel(id) {
     var li = document.getElementById(id); if (!li) return null;
     var p = document.createElement('aside'); p.className = 'evidence'; p.setAttribute('role', 'note');
     var host = li.querySelector('.host'), link = li.querySelector('.src-title'), quote = li.querySelector('blockquote');
-    var h = document.createElement('p'); h.className = 'host'; h.textContent = (host ? host.textContent : '') + ' says:'; p.appendChild(h);
-    var q = document.createElement('blockquote'); q.textContent = quote ? quote.textContent : ''; p.appendChild(q);
-    if (link) { var a = document.createElement('a'); a.href = link.href; a.rel = 'noopener'; a.textContent = 'Open the page'; p.appendChild(a); }
+    var h = document.createElement('p'); h.className = 'host'; h.textContent = T.says.replace('{host}', host ? host.textContent : ''); p.appendChild(h);
+    var q = document.createElement('blockquote'); q.lang = 'en'; q.textContent = quote ? quote.textContent : ''; p.appendChild(q);
+    if (link) { var a = document.createElement('a'); a.href = link.href; a.rel = 'noopener'; a.textContent = T.open; p.appendChild(a); }
     return p;
   }
   marks.forEach(function (m) {
@@ -26,5 +27,21 @@
   });
   var first = document.querySelector('.proof a[href^="#s"]');      /* the home page shows one source already open */
   if (first) first.click();
+})();
+
+/* Language switch. Choosing a language remembers it (the head script uses that on a later visit), then the thumb slides
+   across before the page changes. With reduced motion, or a ctrl/cmd/middle click, it just follows the link. */
+(function () {
+  var nav = document.querySelector('.lang'); if (!nav) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  Array.prototype.forEach.call(nav.querySelectorAll('a[data-setlang]'), function (a, i) {
+    a.addEventListener('click', function (e) {
+      try { localStorage.setItem('soilsutra-lang', a.getAttribute('data-setlang')); } catch (x) {}
+      if (a.getAttribute('aria-current') === 'true') { e.preventDefault(); return; }
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || reduce) return;
+      e.preventDefault(); nav.setAttribute('data-i', i);
+      setTimeout(function () { location.href = a.href; }, 190);
+    });
+  });
 })();
 </script>

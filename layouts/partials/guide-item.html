@@ -1,0 +1,7 @@
+{{- /* One guide in a list. Context: the guide's page. A guide in another language than the one shown is marked "English only". */ -}}
+{{- $other := ne .Language.Lang site.Language.Lang -}}
+<li{{ if $other }} class="fallback"{{ end }}>
+  <h3><a href="{{ .RelPermalink }}"{{ if $other }} lang="{{ .Language.Lang }}"{{ end }}>{{ .Title }}</a></h3>
+  <p{{ if $other }} lang="{{ .Language.Lang }}"{{ end }}>{{ .Params.summary }}</p>
+  <p class="meta"><span>{{ i18n (cond (eq (int .Params.sources) 1) "sources_one" "sources_other") (dict "n" .Params.sources) }}</span><span>{{ i18n "updated" (dict "date" (.Params.updated | time.Format "2 Jan 2006")) }}</span>{{ if $other }}<span class="tag">{{ i18n "english_only" }}</span>{{ end }}</p>
+</li>

@@ -3,6 +3,28 @@
 <title>{{ if .IsHome }}{{ site.Title }}: {{ site.Params.tagline }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
 <meta name="description" content="{{ with .Params.summary }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
 <link rel="canonical" href="{{ .Permalink }}">
+{{- /* Tell search engines which page is the same content in the other language. data-path is used by the language memory below. */ -}}
+{{ with .AllTranslations }}{{ if gt (len .) 1 }}
+{{ range . }}<link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}" data-path="{{ .RelPermalink }}">{{ end }}
+{{ range . }}{{ if eq .Language.Lang hugo.Sites.Default.Language.Lang }}<link rel="alternate" hreflang="x-default" href="{{ .Permalink }}">{{ end }}{{ end }}
+{{ end }}{{ end }}
+<script>
+/* Language memory. The switch in the header stores the reader's choice. A later visit that arrives from outside the site
+   (a bookmark, a search result) on an English page is moved to the same page in the chosen language, if there is one.
+   It never moves a reader off a page that is already in another language (a Hindi link someone sent them opens in
+   Hindi), and moving around inside the site is never redirected (a link to the English original opens English). */
+(function () {
+  try {
+    var want = localStorage.getItem('soilsutra-lang');
+    var here = document.documentElement.lang.slice(0, 2);
+    if (!want || want === here || here !== {{ hugo.Sites.Default.Language.Lang | jsonify | safeJS }}) return;
+    if (document.referrer && new URL(document.referrer).origin === location.origin) return;
+    var alt = document.querySelector('link[rel="alternate"][hreflang="' + want + '"]');
+    var path = alt && alt.getAttribute('data-path');
+    if (path && path !== location.pathname) location.replace(path + location.hash);
+  } catch (e) {}
+})();
+</script>
 <meta property="og:title" content="{{ .Title }}">
 <meta property="og:description" content="{{ with .Params.summary }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
@@ -10,9 +32,12 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%2335291e'/%3E%3Cpath d='M5 18c8 0 4-6.5 8-8.5s4.5-2.5 6-3.5' fill='none' stroke='%23e8b9b3' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preload" href="{{ "fonts/literata-latin.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{ "fonts/bricolage-grotesque-latin.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+{{ if eq site.Language.Lang "hi" }}<link rel="preload" href="{{ "fonts/noto-sans-devanagari.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>{{ end }}
 <style>
 @font-face { font-family: "Literata"; src: url("{{ "fonts/literata-latin.woff2" | relURL }}") format("woff2"); font-weight: 200 900; font-style: normal; font-display: swap; }
 @font-face { font-family: "Bricolage Grotesque"; src: url("{{ "fonts/bricolage-grotesque-latin.woff2" | relURL }}") format("woff2"); font-weight: 200 800; font-style: normal; font-display: swap; }
+/* Devanagari (Hindi) letters. Only downloaded when a page has them; the Latin fonts above cover everything else. */
+@font-face { font-family: "Noto Sans Devanagari"; src: url("{{ "fonts/noto-sans-devanagari.woff2" | relURL }}") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; unicode-range: U+0900-097F, U+1CD0-1CF9, U+200C-200D, U+20A8, U+20B9, U+20F0, U+25CC, U+A830-A839, U+A8E0-A8FF, U+11B00-11B09; }
 </style>
 {{ $css := resources.Get "css/main.css" | resources.Minify | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">

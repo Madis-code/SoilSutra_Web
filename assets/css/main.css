@@ -209,3 +209,41 @@ section.block { padding-top: 1rem; }
   .evidence { animation: open .18s ease-out; }
   @keyframes open { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
 }
+
+/* header: brand left; menu and language switch on the right (second row on phones) */
+.top .nav { margin-left: auto; }
+@media (max-width: 39.99rem) {
+  .top .lang { order: 2; margin-left: auto; }
+  .top .nav { order: 3; flex: 1 0 100%; margin-left: 0; }
+}
+
+/* English / Hindi switch: a pill with a thumb that slides to the chosen language */
+.lang { position: relative; display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; padding: 2px; border: 1px solid rgba(239, 233, 220, .38); border-radius: 999px; font: 600 .82rem/1 var(--ui); }
+.lang a { position: relative; z-index: 1; padding: .45rem .85rem; border-radius: 999px; text-align: center; text-decoration: none; color: var(--humus-ink); transition: color .18s; }
+.lang a:focus-visible { outline-color: var(--humus-ink); }
+.lang .thumb { position: absolute; top: 2px; bottom: 2px; left: 2px; width: calc((100% - 4px) / 2); border-radius: 999px; background: var(--humus-ink); transition: transform .18s ease; }
+.lang[data-n="3"] .thumb { width: calc((100% - 4px) / 3); }
+.lang[data-i="1"] .thumb { transform: translateX(100%); }
+.lang[data-i="2"] .thumb { transform: translateX(200%); }
+.lang[data-i="0"] a:nth-of-type(1), .lang[data-i="1"] a:nth-of-type(2), .lang[data-i="2"] a:nth-of-type(3) { color: var(--humus); }
+@media (prefers-reduced-motion: reduce) { .lang .thumb, .lang a { transition: none; } }
+
+/* a guide shown in a language it is not written in, and the note on a translated guide */
+.tag { padding: .1rem .55rem; border: 1px solid var(--rule); border-radius: 999px; font: 600 .75rem/1.5 var(--ui); color: var(--muted); }
+.article .meta + .translated { margin: -1rem 0 1.6rem; }
+.translated { font: .92rem/1.55 var(--ui); color: var(--muted); }
+
+/* Hindi. Devanagari has marks above and below the line, so lines need more room and letters must not be tracked.
+   Only one extra font file (Noto Sans Devanagari) is needed; Latin letters, numbers and names keep the site's own fonts. */
+html:lang(hi) { font-size: 106%; }
+:lang(hi) {
+  --read: "Literata", "Noto Sans Devanagari", "Nirmala UI", "Kohinoor Devanagari", "Mangal", Georgia, serif;
+  --ui: "Bricolage Grotesque", "Noto Sans Devanagari", "Nirmala UI", "Kohinoor Devanagari", "Mangal", "Segoe UI", system-ui, sans-serif;
+}
+:lang(hi) body { line-height: 1.85; }
+:lang(hi) :is(h1, h2, h3) { line-height: 1.35; letter-spacing: 0; }
+:lang(hi) :is(.nav, .nav a, .lang, .lang a, .lp-tab, .lp-level, .steps .t, .steps .lv, .steps .st, .eyebrow, .meta, .crumb, .progress, .more,
+  .planned summary, .step-nav a, .step-nav small, .signup button, .evidence .host, .proof small, .sources .host, .sources .src-title,
+  .draft-banner, .stage .note, .tag, .translated, .lead-in) { line-height: 1.55; letter-spacing: 0; }
+:lang(hi) .hero h1 { max-width: 17ch; }
+:lang(hi) .proof .sentence, :lang(hi) .prose > p:first-child { line-height: 1.7; }

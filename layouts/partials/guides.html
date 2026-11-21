@@ -1,0 +1,23 @@
+{{- /*
+  The guides to show in the current language, newest first.
+  Call as: partialCached "guides.html" . site.Language.Lang
+  In the default language this is just that language's guides. In another language it is the guides translated into
+  it, plus every default-language guide that has no translation yet, so that nothing the site knows is hidden.
+  A guide shown in a language other than the page's own has .Language.Lang different from site.Language.Lang.
+*/ -}}
+{{- $own := where site.RegularPages "Section" "articles" -}}
+{{- $out := slice -}}
+{{- range $own }}{{ $out = $out | append . }}{{ end -}}
+{{- $default := hugo.Sites.Default.Language.Lang -}}
+{{- if ne site.Language.Lang $default -}}
+  {{- $have := slice -}}
+  {{- range $own }}{{ $have = $have | append .TranslationKey }}{{ end -}}
+  {{- range hugo.Sites -}}
+    {{- if eq .Language.Lang $default -}}
+      {{- range where .RegularPages "Section" "articles" -}}
+        {{- if not (in $have .TranslationKey) }}{{ $out = $out | append . }}{{ end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return (sort $out "Params.updated" "desc") -}}

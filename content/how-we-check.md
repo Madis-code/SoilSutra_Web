@@ -17,6 +17,10 @@ A guide is only as good as the way it was made, so here is the whole process.
 6. The assistant arranges only those facts into a guide. A program checks every sentence: it must cite a fact by number, and it may not add a number, a name or a strong word such as "always" that its sources do not have.
 7. A person reads the guide before it goes live.
 
+## Translations
+
+Hindi pages are translations of the English guides. The quotes stay in English, because they are the source's own words. A program checks that each translation has the same sources, links, quotes, source numbers and figures as the English original, and a person reads the translation before it goes live. We cannot check that a translation keeps the exact meaning, so if the two languages seem to differ, trust the English guide.
+
 ## What we cannot check
 
 - Whether the source itself is right. We show the source so you can judge it.

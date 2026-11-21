@@ -1,0 +1,21 @@
+{{- /*
+  The English / Hindi switch. Each segment goes to the same page in that language. If that page has no twin it goes to the
+  same section, and if there is none either, to that language's home page. Context: a page.
+  A script slides the thumb and remembers the choice; without JavaScript the segments are ordinary links.
+*/ -}}
+{{- $here := . -}}
+{{- $cur := site.Language.Lang -}}
+{{- $idx := 0 -}}
+{{- range $i, $s := hugo.Sites }}{{ if eq $s.Language.Lang $cur }}{{ $idx = $i }}{{ end }}{{ end -}}
+{{- if gt (len hugo.Sites) 1 }}
+<nav class="lang" aria-label="Language / भाषा" data-n="{{ len hugo.Sites }}" data-i="{{ $idx }}">
+  <span class="thumb" aria-hidden="true"></span>
+  {{- range hugo.Sites }}
+  {{- $lang := .Language.Lang -}}
+  {{- $url := .Home.RelPermalink -}}
+  {{- with $here.CurrentSection }}{{ range .AllTranslations }}{{ if eq .Language.Lang $lang }}{{ $url = .RelPermalink }}{{ end }}{{ end }}{{ end -}}
+  {{- range $here.AllTranslations }}{{ if eq .Language.Lang $lang }}{{ $url = .RelPermalink }}{{ end }}{{ end }}
+  <a href="{{ $url }}" lang="{{ $lang }}" hreflang="{{ $lang }}" data-setlang="{{ $lang }}"{{ if eq $lang $cur }} aria-current="true"{{ end }}>{{ .Language.Label }}</a>
+  {{- end }}
+</nav>
+{{- end }}

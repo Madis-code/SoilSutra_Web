@@ -1,24 +1,29 @@
 {{ define "main" }}
-{{ $lp := partialCached "learning-path.html" . }}
+{{ $lp := partialCached "learning-path.html" . site.Language.Lang }}
 {{ $topic := .Params.topic | default "" }}
+{{ $default := hugo.Sites.Default.Language.Lang }}
 <article class="narrow article">
-  {{ if .Draft }}<p class="draft-banner">Draft. A person has not reviewed this article yet, so it is not public.</p>{{ end }}
+  {{ if .Draft }}<p class="draft-banner">{{ i18n "draft_banner" }}</p>{{ end }}
   {{ range $i, $s := $lp.stages }}{{ if not $s.extra }}{{ range $s.topics }}{{ if eq .key $topic }}
-  <p class="crumb"><a href="{{ "articles/" | relURL }}#path-{{ $s.slug }}">Stage {{ add $i 1 }} of {{ $lp.count }}: {{ $s.title }}</a><span class="gauge" aria-hidden="true">{{ range seq 4 }}<i{{ if le . $s.rank }} class="on"{{ end }}></i>{{ end }}</span>{{ $s.level | title }}</p>
+  <p class="crumb"><a href="{{ "articles/" | relLangURL }}#path-{{ $s.slug }}">{{ i18n "stage_of" (dict "n" (add $i 1) "total" $lp.count) }}: {{ $s.title }}</a><span class="gauge" aria-hidden="true">{{ range seq 4 }}<i{{ if le . $s.rank }} class="on"{{ end }}></i>{{ end }}</span>{{ i18n (printf "level_%s" $s.level) }}</p>
   {{ end }}{{ end }}{{ end }}{{ end }}
   <h1>{{ .Title }}</h1>
-  <p class="meta"><span>Updated {{ .Params.updated | time.Format "2 Jan 2006" }}</span><span>{{ .Params.sources }} sources</span></p>
+  <p class="meta"><span>{{ i18n "updated" (dict "date" (.Params.updated | time.Format "2 Jan 2006")) }}</span><span>{{ i18n (cond (eq (int .Params.sources) 1) "sources_one" "sources_other") (dict "n" .Params.sources) }}</span></p>
+  {{ if ne .Language.Lang $default }}
+  {{ $en := "" }}{{ range .AllTranslations }}{{ if eq .Language.Lang $default }}{{ $en = . }}{{ end }}{{ end }}
+  <p class="translated">{{ i18n "translated_note" }}{{ with $en }} <a href="{{ .RelPermalink }}" hreflang="{{ .Language.Lang }}" lang="{{ .Language.Lang }}">{{ i18n "read_original" }}</a>{{ end }}</p>
+  {{ end }}
   <div class="prose">{{ .Content }}</div>
 
   <section class="sources" aria-labelledby="sources-h">
-    <h2 id="sources-h">Sources</h2>
-    <p class="note">The quotes are copied from each page. A program checks that each quote is on the page, and that the numbers and names in our sentences appear in the sources they cite. A person reads the article before it goes live. <a href="{{ "how-we-check/" | relURL }}">How we check</a></p>
+    <h2 id="sources-h">{{ i18n "sources_heading" }}</h2>
+    <p class="note">{{ i18n "sources_note" }} <a href="{{ "how-we-check/" | relLangURL }}">{{ i18n "how_we_check" }}</a></p>
     <ol>
       {{ range .Params.references }}
       <li id="s{{ .n }}">
         <p class="host">{{ .host }}</p>
-        <a class="src-title" href="{{ .url }}" rel="noopener">{{ if eq .title .host }}Open the source page{{ else }}{{ .title }}{{ end }}</a>
-        <blockquote>{{ .quote }}</blockquote>
+        <a class="src-title" href="{{ .url }}" rel="noopener">{{ if eq .title .host }}{{ i18n "open_source_page" }}{{ else }}{{ .title }}{{ end }}</a>
+        <blockquote lang="en">{{ .quote }}</blockquote>
       </li>
       {{ end }}
     </ol>

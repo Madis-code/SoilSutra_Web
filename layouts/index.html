@@ -1,6 +1,7 @@
 {{ define "main" }}
 {{ $articles := where site.RegularPages "Section" "articles" }}
-{{ $lp := partialCached "learning-path.html" . }}
+{{ $all := partialCached "guides.html" . site.Language.Lang }}
+{{ $lp := partialCached "learning-path.html" . site.Language.Lang }}
 <section class="wrap hero">
   <div class="intro">
     <h1>{{ .Params.headline }}</h1>
@@ -9,9 +10,9 @@
   {{ with $articles }}{{ $a := index (.ByParam "updated").Reverse 0 }}{{ with $a.Params.lede }}
   <div class="proof">
     <p class="sentence">{{ . }}{{ range $a.Params.lede_refs }} <a href="#s{{ . }}">{{ . }}</a>{{ end }}</p>
-    <small>Tap the pink number to see the exact words and the page they came from.</small>
+    <small>{{ i18n "home_proof_hint" }}</small>
     <ol hidden>
-      {{ range $a.Params.references }}<li id="s{{ .n }}"><p class="host">{{ .host }}</p><a class="src-title" href="{{ .url }}">{{ if eq .title .host }}Open the source page{{ else }}{{ .title }}{{ end }}</a><blockquote>{{ .quote }}</blockquote></li>{{ end }}
+      {{ range $a.Params.references }}<li id="s{{ .n }}"><p class="host">{{ .host }}</p><a class="src-title" href="{{ .url }}">{{ if eq .title .host }}{{ i18n "open_source_page" }}{{ else }}{{ .title }}{{ end }}</a><blockquote>{{ .quote }}</blockquote></li>{{ end }}
     </ol>
   </div>
   {{ end }}{{ end }}
@@ -20,16 +21,16 @@
 <div class="wrap">
   {{ if $lp.stages }}
   <section class="block" aria-labelledby="path-h">
-    <h2 id="path-h" style="margin-top:1rem">Learn in order</h2>
-    <p class="lead-in">The path has {{ $lp.count }} stages, from setting up your first bed to the chemistry of the finished product. Start at the first one, or jump to where you are.</p>
+    <h2 id="path-h" style="margin-top:1rem">{{ i18n "path_heading" }}</h2>
+    <p class="lead-in">{{ i18n "path_lead" (dict "count" $lp.count) }}</p>
     <ol class="steps">
       {{ range $i, $s := $lp.stages }}{{ if not $s.extra }}
       <li>
-        <a href="{{ "articles/" | relURL }}#path-{{ $s.slug }}"{{ if not $s.done }} class="empty"{{ end }}>
+        <a href="{{ "articles/" | relLangURL }}#path-{{ $s.slug }}"{{ if not $s.done }} class="empty"{{ end }}>
           <span class="n">{{ add $i 1 }}</span>
           <span class="t">{{ $s.title }}</span>
-          <span class="lv"><span class="gauge" aria-hidden="true">{{ range seq 4 }}<i{{ if le . $s.rank }} class="on"{{ end }}></i>{{ end }}</span>{{ $s.level | title }}</span>
-          <span class="st">{{ if $s.done }}{{ $s.done }} of {{ $s.total }} topics covered{{ else }}In research{{ end }}</span>
+          <span class="lv"><span class="gauge" aria-hidden="true">{{ range seq 4 }}<i{{ if le . $s.rank }} class="on"{{ end }}></i>{{ end }}</span>{{ i18n (printf "level_%s" $s.level) }}</span>
+          <span class="st">{{ if $s.done }}{{ i18n "topics_covered" (dict "done" $s.done "total" $s.total) }}{{ else }}{{ i18n "in_research" }}{{ end }}</span>
         </a>
       </li>
       {{ end }}{{ end }}
@@ -37,28 +38,22 @@
   </section>
   {{ end }}
 
-  {{ if $articles }}
+  {{ if $all }}
   <section class="block" aria-labelledby="guides-h">
-    <h2 id="guides-h">Latest guides</h2>
+    <h2 id="guides-h">{{ i18n "latest_guides" }}</h2>
     <ul class="list">
-      {{ range first 3 (($articles.ByParam "updated").Reverse) }}
-      <li>
-        <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-        <p>{{ .Params.summary }}</p>
-        <p class="meta"><span>{{ .Params.sources }} sources</span><span>Updated {{ .Params.updated | time.Format "2 Jan 2006" }}</span></p>
-      </li>
-      {{ end }}
+      {{ range first 3 $all }}{{ partial "guide-item.html" . }}{{ end }}
     </ul>
-    <p class="more"><a href="{{ "articles/" | relURL }}">All guides, by stage</a></p>
+    <p class="more"><a href="{{ "articles/" | relLangURL }}">{{ i18n "all_guides" }}</a></p>
   </section>
   {{ end }}
 
   <section class="block" aria-labelledby="work-h">
-    <h2 id="work-h">If you make vermicompost</h2>
+    <h2 id="work-h">{{ i18n "work_heading" }}</h2>
     <div class="cols">
-      <div><h3>Read the research</h3><p>Free guides on feedstock, worms, process control and quality, written from published sources.</p></div>
-      <div><h3>Check your own numbers</h3><p>Calculators for common questions are planned. Each will show the source behind its formula.</p></div>
-      <div><h3>Ask for help</h3><p>For your own site, SoilSutra can review your process and suggest what to measure first.</p></div>
+      <div><h3>{{ i18n "work_read_h" }}</h3><p>{{ i18n "work_read_p" }}</p></div>
+      <div><h3>{{ i18n "work_check_h" }}</h3><p>{{ i18n "work_check_p" }}</p></div>
+      <div><h3>{{ i18n "work_help_h" }}</h3><p>{{ i18n "work_help_p" }}</p></div>
     </div>
   </section>
 

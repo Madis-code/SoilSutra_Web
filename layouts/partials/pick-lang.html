@@ -1,0 +1,12 @@
+{{- /*
+  Picks the text for the current language from a map such as { en: "Basics", hi: "बुनियादी बातें" }.
+  A plain string is returned as it is. If the current language's text is missing, the English text is used.
+  Call as: partial "pick-lang.html" $value
+*/ -}}
+{{- $out := "" -}}
+{{- if reflect.IsMap . -}}
+  {{- $out = index . site.Language.Lang | default (index . "en") -}}
+{{- else -}}
+  {{- $out = . -}}
+{{- end -}}
+{{- return $out -}}

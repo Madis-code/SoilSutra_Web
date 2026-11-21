@@ -1,0 +1,119 @@
+# Interface text, Hindi. Same keys as en.yaml. {{ .name }} marks a value filled in by the template.
+# Terms used: वर्मीकम्पोस्ट (vermicompost), आहार सामग्री (feedstock), चरण (stage), उद्धरण (quote), स्रोत (source).
+
+main_nav_label:
+  other: "मुख्य"
+
+# footer
+footer_about:
+  other: "SoilSutra वर्मीकम्पोस्ट पर शोध को सरल भाषा में प्रकाशित करता है। हर वाक्य के साथ वह पेज दिखता है जहाँ से वह लिया गया है, और वे सटीक शब्द भी जिन पर हमने भरोसा किया।"
+footer_disclaimer:
+  other: "यह सामान्य जानकारी है, आपकी अपनी इकाई के लिए सलाह नहीं। किसी संख्या पर अमल करने से पहले स्रोत ज़रूर देख लें।"
+footer_write:
+  other: "हमें लिखें:"
+
+# home
+home_proof_hint:
+  other: "गुलाबी संख्या दबाएँ और देखें कि सटीक शब्द क्या हैं और वे किस पेज से लिए गए हैं।"
+path_heading:
+  other: "क्रम से सीखें"
+path_lead:
+  other: "यह रास्ता {{ .count }} चरणों का है: अपना पहला बेड लगाने से लेकर तैयार खाद के रसायन तक। पहले चरण से शुरू करें, या सीधे वहाँ जाएँ जहाँ आप हैं।"
+topics_covered:
+  other: "{{ .total }} में से {{ .done }} विषय शामिल"
+in_research:
+  other: "शोध जारी"
+latest_guides:
+  other: "नवीनतम गाइड"
+all_guides:
+  other: "सभी गाइड, चरण के अनुसार"
+work_heading:
+  other: "अगर आप वर्मीकम्पोस्ट बनाते हैं"
+work_read_h:
+  other: "शोध पढ़ें"
+work_read_p:
+  other: "आहार सामग्री, केंचुओं, प्रक्रिया नियंत्रण और गुणवत्ता पर मुफ़्त गाइड, जो प्रकाशित स्रोतों से लिखी गई हैं।"
+work_check_h:
+  other: "अपने आँकड़े जाँचें"
+work_check_p:
+  other: "आम सवालों के लिए कैलकुलेटर की योजना है। हर कैलकुलेटर अपने फ़ॉर्मूले का स्रोत दिखाएगा।"
+work_help_h:
+  other: "मदद माँगें"
+work_help_p:
+  other: "आपकी अपनी इकाई के लिए SoilSutra आपकी प्रक्रिया देखकर बता सकता है कि सबसे पहले क्या मापना चाहिए।"
+
+# levels
+level_beginner:
+  other: "शुरुआती"
+level_intermediate:
+  other: "मध्यम"
+level_advanced:
+  other: "उन्नत"
+level_expert:
+  other: "विशेषज्ञ"
+
+# guides page (the learning path)
+path_nav_label:
+  other: "सीखने का रास्ता, शुरुआती से विशेषज्ञ तक"
+stage_of:
+  other: "चरण {{ .n }} / {{ .total }}"
+progress_some:
+  other: "प्रकाशित गाइड वाले विषय: {{ .total }} में से {{ .done }}।"
+progress_none:
+  other: "इस चरण की कोई गाइड अभी प्रकाशित नहीं हुई है।"
+stage_empty_note:
+  other: "इस चरण की गाइड पर शोध और जाँच जारी है। हर गाइड किसी व्यक्ति के स्वीकृत करने के बाद ही यहाँ दिखेगी।"
+planned_all:
+  other: "इस चरण में प्रस्तावित विषय"
+planned_more:
+  other: "इस चरण में आगे आने वाले विषय"
+step_nav_label:
+  other: "पिछला और अगला चरण"
+step_prev:
+  other: "पिछला चरण"
+step_next:
+  other: "अगला चरण"
+other_guides_title:
+  other: "अन्य गाइड"
+other_guides_blurb:
+  other: "वे गाइड जो अभी रास्ते में किसी चरण में नहीं रखी गई हैं।"
+
+# guide list items and article pages
+sources_one:
+  other: "{{ .n }} स्रोत"
+sources_other:
+  other: "{{ .n }} स्रोत"
+updated:
+  other: "अपडेट: {{ .date }}"
+english_only:
+  other: "केवल अंग्रेज़ी में"
+draft_banner:
+  other: "ड्राफ़्ट। इस लेख को अभी किसी व्यक्ति ने नहीं जाँचा है, इसलिए यह सार्वजनिक नहीं है।"
+sources_heading:
+  other: "स्रोत"
+sources_note:
+  other: "उद्धरण हर पेज से ज्यों-के-त्यों लिए गए हैं, इसलिए वे स्रोत की मूल भाषा (अंग्रेज़ी) में हैं। एक प्रोग्राम जाँचता है कि हर उद्धरण उस पेज पर मौजूद है, और हमारे वाक्यों की संख्याएँ और नाम उन स्रोतों में मिलते हैं जिनका हवाला दिया गया है। लेख प्रकाशित होने से पहले एक व्यक्ति उसे पढ़ता है।"
+how_we_check:
+  other: "हम कैसे जाँचते हैं"
+open_source_page:
+  other: "स्रोत पेज खोलें"
+translated_note:
+  other: "यह अंग्रेज़ी गाइड का हिन्दी अनुवाद है। उद्धरण स्रोत के अपने शब्दों में, यानी अंग्रेज़ी में ही रहते हैं।"
+read_original:
+  other: "अंग्रेज़ी मूल पढ़ें"
+
+# source evidence panel (built by script; {host} is filled in by the script)
+evidence_says:
+  other: "{{ .host }} के अनुसार:"
+open_page:
+  other: "पेज खोलें"
+
+# sign-up
+signup_title:
+  other: "नई गाइड ईमेल पर पाएँ"
+signup_text:
+  other: "नई गाइड तैयार होने पर एक छोटा ईमेल। इसके अलावा कोई और मेल नहीं।"
+signup_label:
+  other: "ईमेल पता"
+signup_button:
+  other: "मुझे नई गाइड भेजें"

@@ -1,0 +1,118 @@
+# Interface text, English. Same keys as hi.yaml. {{ .name }} marks a value filled in by the template.
+
+main_nav_label:
+  other: "Main"
+
+# footer
+footer_about:
+  other: "SoilSutra publishes vermicompost research in plain language. Each sentence shows the page it came from and the exact words we relied on."
+footer_disclaimer:
+  other: "This is general information, not advice for your site. Check the source before you act on a number."
+footer_write:
+  other: "Write to"
+
+# home
+home_proof_hint:
+  other: "Tap the pink number to see the exact words and the page they came from."
+path_heading:
+  other: "Learn in order"
+path_lead:
+  other: "The path has {{ .count }} stages, from setting up your first bed to the chemistry of the finished product. Start at the first one, or jump to where you are."
+topics_covered:
+  other: "{{ .done }} of {{ .total }} topics covered"
+in_research:
+  other: "In research"
+latest_guides:
+  other: "Latest guides"
+all_guides:
+  other: "All guides, by stage"
+work_heading:
+  other: "If you make vermicompost"
+work_read_h:
+  other: "Read the research"
+work_read_p:
+  other: "Free guides on feedstock, worms, process control and quality, written from published sources."
+work_check_h:
+  other: "Check your own numbers"
+work_check_p:
+  other: "Calculators for common questions are planned. Each will show the source behind its formula."
+work_help_h:
+  other: "Ask for help"
+work_help_p:
+  other: "For your own site, SoilSutra can review your process and suggest what to measure first."
+
+# levels
+level_beginner:
+  other: "Beginner"
+level_intermediate:
+  other: "Intermediate"
+level_advanced:
+  other: "Advanced"
+level_expert:
+  other: "Expert"
+
+# guides page (the learning path)
+path_nav_label:
+  other: "Learning path, beginner to expert"
+stage_of:
+  other: "Stage {{ .n }} of {{ .total }}"
+progress_some:
+  other: "Topics with a published guide: {{ .done }} of {{ .total }}."
+progress_none:
+  other: "No guide in this stage is published yet."
+stage_empty_note:
+  other: "Guides for this stage are being researched and checked. Each one appears here once a person has approved it."
+planned_all:
+  other: "Planned in this stage"
+planned_more:
+  other: "Also planned in this stage"
+step_nav_label:
+  other: "Previous and next stage"
+step_prev:
+  other: "Previous stage"
+step_next:
+  other: "Next stage"
+other_guides_title:
+  other: "Other guides"
+other_guides_blurb:
+  other: "Guides that are not placed on the path yet."
+
+# guide list items and article pages
+sources_one:
+  other: "{{ .n }} source"
+sources_other:
+  other: "{{ .n }} sources"
+updated:
+  other: "Updated {{ .date }}"
+english_only:
+  other: "English only"
+draft_banner:
+  other: "Draft. A person has not reviewed this article yet, so it is not public."
+sources_heading:
+  other: "Sources"
+sources_note:
+  other: "The quotes are copied from each page. A program checks that each quote is on the page, and that the numbers and names in our sentences appear in the sources they cite. A person reads the article before it goes live."
+how_we_check:
+  other: "How we check"
+open_source_page:
+  other: "Open the source page"
+translated_note:
+  other: "This is a translation of the English guide. The quotes stay in the source's own words."
+read_original:
+  other: "Read the English original"
+
+# source evidence panel (built by script; {host} is filled in by the script)
+evidence_says:
+  other: "{{ .host }} says:"
+open_page:
+  other: "Open the page"
+
+# sign-up
+signup_title:
+  other: "Get new guides by email"
+signup_text:
+  other: "One short email when a new guide is ready. No other mail."
+signup_label:
+  other: "Email address"
+signup_button:
+  other: "Send me new guides"

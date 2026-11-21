@@ -1,16 +1,16 @@
 {{ define "main" }}
-{{ $lp := partialCached "learning-path.html" . }}
+{{ $lp := partialCached "learning-path.html" . site.Language.Lang }}
 {{ $planned := true }}{{ if isset site.Params "showplannedtopics" }}{{ $planned = site.Params.showPlannedTopics }}{{ end }}
 <div class="wrap page path">
   <h1>{{ .Title }}</h1>
   <div class="path-intro">{{ .Content }}</div>
 
   <div class="lp" data-tabs data-default="{{ $lp.default }}">
-    <nav class="lp-nav" aria-label="Learning path, beginner to expert">
+    <nav class="lp-nav" aria-label="{{ i18n "path_nav_label" }}">
       <div class="lp-rail" data-tablist>
         {{ $shown := "" }}
         {{ range $i, $s := $lp.stages }}
-          {{ if and $s.level (ne $s.level $shown) }}<span class="lp-level" aria-hidden="true">{{ $s.level | title }}</span>{{ $shown = $s.level }}{{ end }}
+          {{ if and $s.level (ne $s.level $shown) }}<span class="lp-level" aria-hidden="true">{{ i18n (printf "level_%s" $s.level) }}</span>{{ $shown = $s.level }}{{ end }}
           <a class="lp-tab{{ if not $s.done }} empty{{ end }}" href="#path-{{ $s.slug }}" data-tab="{{ $s.slug }}">
             {{ if not $s.extra }}<span class="n">{{ add $i 1 }}</span>{{ end }}
             <span class="t">{{ $s.title }}</span>
@@ -25,45 +25,39 @@
         <header class="stage-head">
           {{ if not $s.extra }}
           <p class="eyebrow">
-            <span>Stage {{ add $i 1 }} of {{ $lp.count }}</span>
+            <span>{{ i18n "stage_of" (dict "n" (add $i 1) "total" $lp.count) }}</span>
             <span class="gauge" aria-hidden="true">{{ range seq 4 }}<i{{ if le . $s.rank }} class="on"{{ end }}></i>{{ end }}</span>
-            <span>{{ $s.level | title }}</span>
+            <span>{{ i18n (printf "level_%s" $s.level) }}</span>
           </p>
           {{ end }}
           <h2 id="hd-{{ $s.slug }}">{{ $s.title }}</h2>
           <p class="blurb">{{ $s.blurb }}</p>
           {{ if not $s.extra }}
-          <p class="progress">{{ if $s.done }}{{ $s.done }} of {{ $s.total }} topics {{ if eq $s.done 1 }}has{{ else }}have{{ end }} a published guide.{{ else }}No guide in this stage is published yet.{{ end }}</p>
+          <p class="progress">{{ if $s.done }}{{ i18n "progress_some" (dict "done" $s.done "total" $s.total) }}{{ else }}{{ i18n "progress_none" }}{{ end }}</p>
           {{ end }}
         </header>
 
         {{ if $s.done }}
         <ul class="list topics">
-          {{ range $s.topics }}{{ range .pages }}
-          <li>
-            <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-            <p>{{ .Params.summary }}</p>
-            <p class="meta"><span>{{ .Params.sources }} sources</span><span>Updated {{ .Params.updated | time.Format "2 Jan 2006" }}</span></p>
-          </li>
-          {{ end }}{{ end }}
+          {{ range $s.topics }}{{ range .pages }}{{ partial "guide-item.html" . }}{{ end }}{{ end }}
         </ul>
         {{ else }}
-        <p class="note">Guides for this stage are being researched and checked. Each one appears here once a person has approved it.</p>
+        <p class="note">{{ i18n "stage_empty_note" }}</p>
         {{ end }}
 
         {{ $left := sub $s.total $s.done }}
         {{ if and $planned (gt $left 0) }}
         <details class="planned"{{ if not $s.done }} open{{ end }}>
-          <summary>{{ if $s.done }}Also planned in this stage{{ else }}Planned in this stage{{ end }} ({{ $left }})</summary>
+          <summary>{{ if $s.done }}{{ i18n "planned_more" }}{{ else }}{{ i18n "planned_all" }}{{ end }} ({{ $left }})</summary>
           <ul>
             {{ range $s.topics }}{{ if not .pages }}<li>{{ .title }}</li>{{ end }}{{ end }}
           </ul>
         </details>
         {{ end }}
 
-        <nav class="step-nav" aria-label="Previous and next stage">
-          {{ if gt $i 0 }}{{ $p := index $lp.stages (sub $i 1) }}<a class="prev" href="#path-{{ $p.slug }}" data-go="{{ $p.slug }}"><small>Previous stage</small>{{ $p.title }}</a>{{ end }}
-          {{ if lt (add $i 1) (len $lp.stages) }}{{ $q := index $lp.stages (add $i 1) }}<a class="next" href="#path-{{ $q.slug }}" data-go="{{ $q.slug }}"><small>Next stage</small>{{ $q.title }}</a>{{ end }}
+        <nav class="step-nav" aria-label="{{ i18n "step_nav_label" }}">
+          {{ if gt $i 0 }}{{ $p := index $lp.stages (sub $i 1) }}<a class="prev" href="#path-{{ $p.slug }}" data-go="{{ $p.slug }}"><small>{{ i18n "step_prev" }}</small>{{ $p.title }}</a>{{ end }}
+          {{ if lt (add $i 1) (len $lp.stages) }}{{ $q := index $lp.stages (add $i 1) }}<a class="next" href="#path-{{ $q.slug }}" data-go="{{ $q.slug }}"><small>{{ i18n "step_next" }}</small>{{ $q.title }}</a>{{ end }}
         </nav>
       </section>
       {{ end }}

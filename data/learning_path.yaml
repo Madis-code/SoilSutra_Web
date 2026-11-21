@@ -6,117 +6,134 @@
 # - A guide whose topic is not listed here still appears, under "Other guides", and the build prints a warning.
 # - Edit freely: rename, reorder, add or remove stages and topics. The page follows this file.
 # - level is one of: beginner, intermediate, advanced, expert.
+# - Every title and blurb has an English (en) and a Hindi (hi) text. If a hi text is missing, the English one is shown.
 # - Titles and blurbs only say what a stage covers. They never state facts; facts live in the sourced guides.
 
 stages:
   - slug: basics
-    title: Basics
     level: beginner
-    blurb: What vermicompost is, how it differs from ordinary compost, and which worms do the work.
+    title: { en: "Basics", hi: "बुनियादी बातें" }
+    blurb:
+      en: "What vermicompost is, how it differs from ordinary compost, and which worms do the work."
+      hi: "वर्मीकम्पोस्ट (केंचुआ खाद) क्या है, यह सामान्य कम्पोस्ट से कैसे अलग है, और कौन-से केंचुए यह काम करते हैं।"
     topics:
       - key: what-is-vermicompost
-        title: What vermicompost is
+        title: { en: "What vermicompost is", hi: "वर्मीकम्पोस्ट क्या है" }
       - key: worm-species
-        title: Worm species for composting
+        title: { en: "Worm species for composting", hi: "कम्पोस्टिंग के लिए केंचुओं की प्रजातियाँ" }
       - key: vermicompost-vs-compost
-        title: Vermicompost compared with ordinary compost
+        title: { en: "Vermicompost compared with ordinary compost", hi: "वर्मीकम्पोस्ट और सामान्य कम्पोस्ट की तुलना" }
 
   - slug: setup
-    title: Setup
     level: beginner
-    blurb: Choosing a system, preparing bedding and a site, and starting your first batch.
+    title: { en: "Setup", hi: "सेटअप" }
+    blurb:
+      en: "Choosing a system, preparing bedding and a site, and starting your first batch."
+      hi: "सिस्टम चुनना, बिछावन और जगह तैयार करना, और अपना पहला बैच शुरू करना।"
     topics:
       - key: system-types
-        title: "Choosing a system: bins, beds and flow-through"
+        title: { en: "Choosing a system: bins, beds and flow-through", hi: "सिस्टम चुनना: डिब्बे, बेड और फ़्लो-थ्रू" }
       - key: bedding
-        title: Bedding
+        title: { en: "Bedding", hi: "बिछावन" }
       - key: site-and-climate
-        title: Site, shade and climate
+        title: { en: "Site, shade and climate", hi: "जगह, छाँव और जलवायु" }
       - key: first-batch
-        title: Starting your first batch
+        title: { en: "Starting your first batch", hi: "अपना पहला बैच शुरू करना" }
 
   - slug: feeding
-    title: Feeding
     level: beginner
-    blurb: What to feed worms, what to keep out, and how to prepare feedstock.
+    title: { en: "Feeding", hi: "आहार" }
+    blurb:
+      en: "What to feed worms, what to keep out, and how to prepare feedstock."
+      hi: "केंचुओं को क्या खिलाएँ, क्या बाहर रखें, और आहार सामग्री कैसे तैयार करें।"
     topics:
       - key: feedstock
-        title: Feedstocks for worms
+        title: { en: "Feedstocks for worms", hi: "केंचुओं के लिए आहार सामग्री" }
       - key: feeding-rate
-        title: How much and how often to feed
+        title: { en: "How much and how often to feed", hi: "कितना और कितनी बार खिलाएँ" }
       - key: pre-composting
-        title: Pre-composting feedstock
+        title: { en: "Pre-composting feedstock", hi: "आहार सामग्री का पूर्व-कम्पोस्टिंग" }
 
   - slug: process
-    title: Process control
     level: intermediate
-    blurb: Keeping the bed healthy day to day, and fixing it when it is not.
+    title: { en: "Process control", hi: "प्रक्रिया नियंत्रण" }
+    blurb:
+      en: "Keeping the bed healthy day to day, and fixing it when it is not."
+      hi: "बेड को रोज़ स्वस्थ रखना, और गड़बड़ होने पर उसे ठीक करना।"
     topics:
       - key: moisture
-        title: Moisture
+        title: { en: "Moisture", hi: "नमी" }
       - key: temperature
-        title: Temperature
+        title: { en: "Temperature", hi: "तापमान" }
       - key: ph-aeration
-        title: pH and aeration
+        title: { en: "pH and aeration", hi: "pH और हवा का संचार" }
       - key: worm-density
-        title: Worm density and population
+        title: { en: "Worm density and population", hi: "केंचुओं की संख्या और घनत्व" }
       - key: troubleshooting
-        title: Pests, odours and other problems
+        title: { en: "Pests, odours and other problems", hi: "कीट, बदबू और अन्य समस्याएँ" }
 
   - slug: harvest
-    title: Harvest and use
     level: intermediate
-    blurb: Separating the finished product, storing it, and using it on crops.
+    title: { en: "Harvest and use", hi: "खाद निकालना और उपयोग" }
+    blurb:
+      en: "Separating the finished product, storing it, and using it on crops."
+      hi: "तैयार खाद को अलग करना, उसका भंडारण, और फसलों में उसका उपयोग।"
     topics:
       - key: harvesting
-        title: Harvesting methods
+        title: { en: "Harvesting methods", hi: "खाद निकालने के तरीके" }
       - key: curing-storage
-        title: Curing and storage
+        title: { en: "Curing and storage", hi: "परिपक्व करना और भंडारण" }
       - key: application
-        title: Using vermicompost on crops
+        title: { en: "Using vermicompost on crops", hi: "फसलों में वर्मीकम्पोस्ट का उपयोग" }
       - key: liquid-extracts
-        title: Liquid extracts
+        title: { en: "Liquid extracts", hi: "तरल अर्क" }
 
   - slug: scale
-    title: Scale and automation
     level: advanced
-    blurb: Moving from a few bins to a production line, and what to measure and automate.
+    title: { en: "Scale and automation", hi: "विस्तार और स्वचालन" }
+    blurb:
+      en: "Moving from a few bins to a production line, and what to measure and automate."
+      hi: "कुछ डिब्बों से उत्पादन लाइन तक पहुँचना, और क्या मापें व स्वचालित करें।"
     topics:
       - key: commercial-systems
-        title: Commercial systems
+        title: { en: "Commercial systems", hi: "व्यावसायिक सिस्टम" }
       - key: sensors
-        title: Sensors and monitoring
+        title: { en: "Sensors and monitoring", hi: "सेंसर और निगरानी" }
       - key: automation
-        title: Automation and control
+        title: { en: "Automation and control", hi: "स्वचालन और नियंत्रण" }
       - key: economics
-        title: Costs and economics
+        title: { en: "Costs and economics", hi: "लागत और अर्थशास्त्र" }
 
   - slug: quality
-    title: Quality and testing
     level: advanced
-    blurb: Judging maturity and safety, the standards that apply, and which lab tests to run.
+    title: { en: "Quality and testing", hi: "गुणवत्ता और परीक्षण" }
+    blurb:
+      en: "Judging maturity and safety, the standards that apply, and which lab tests to run."
+      hi: "परिपक्वता और सुरक्षा परखना, लागू मानक, और कौन-से लैब टेस्ट कराएँ।"
     topics:
       - key: maturity-stability
-        title: Maturity and stability
+        title: { en: "Maturity and stability", hi: "परिपक्वता और स्थिरता" }
       - key: contaminants
-        title: Pathogens and contaminants
+        title: { en: "Pathogens and contaminants", hi: "रोगाणु और संदूषक" }
       - key: standards
-        title: Standards and labelling
+        title: { en: "Standards and labelling", hi: "मानक और लेबलिंग" }
       - key: lab-testing
-        title: Sampling and lab tests
+        title: { en: "Sampling and lab tests", hi: "नमूना लेना और लैब टेस्ट" }
 
   - slug: composition
-    title: Composition science
     level: expert
-    blurb: What vermicompost is made of and why it works, at the level of chemistry and biology.
+    title: { en: "Composition science", hi: "संरचना का विज्ञान" }
+    blurb:
+      en: "What vermicompost is made of and why it works, at the level of chemistry and biology."
+      hi: "वर्मीकम्पोस्ट किससे बना है और क्यों काम करता है, रसायन और जीव-विज्ञान के स्तर पर।"
     topics:
       - key: nutrient-content
-        title: Nutrient content
+        title: { en: "Nutrient content", hi: "पोषक तत्व" }
       - key: humic-substances
-        title: Organic matter and humic substances
+        title: { en: "Organic matter and humic substances", hi: "कार्बनिक पदार्थ और ह्यूमिक पदार्थ" }
       - key: microbial-communities
-        title: Microbial communities
+        title: { en: "Microbial communities", hi: "सूक्ष्मजीव समुदाय" }
       - key: enzymes-hormones
-        title: Enzymes and plant growth regulators
+        title: { en: "Enzymes and plant growth regulators", hi: "एंज़ाइम और पौध वृद्धि नियामक" }
       - key: nutrient-transformations
-        title: Nutrient transformations during vermicomposting
+        title: { en: "Nutrient transformations during vermicomposting", hi: "वर्मीकम्पोस्टिंग के दौरान पोषक तत्वों का रूपांतरण" }

@@ -1,13 +1,12 @@
 baseURL = "https://soilsutra.com/"
 title = "SoilSutra"
-locale = "en"
 defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false   # English stays at /, Hindi lives at /hi/
 disableKinds = ["taxonomy", "term"]
 enableRobotsTXT = true
 
+# Settings shared by both languages.
 [params]
-  tagline = "Vermicompost facts you can check"
-  description = "Plain-language vermicompost guides. Every sentence links to its source and the exact words we relied on."
   # Email sign-up: put the form address from your email service here (see README). Empty = the sign-up block is hidden.
   signupAction = ""
   # A public contact address, shown in the footer and on the About page. Empty = not shown.
@@ -15,19 +14,48 @@ enableRobotsTXT = true
   # Guides page: list topics that are planned but not yet published. false = show only published guides.
   showPlannedTopics = true
 
-[menus]
-  [[menus.main]]
-    name = "Guides"
-    url = "/articles/"
+# Languages. Interface text lives in i18n/en.yaml and i18n/hi.yaml.
+# A page is translated by giving it a twin with the same name and a language suffix: about.md and about.hi.md.
+[languages]
+  [languages.en]
+    label = "English"
+    locale = "en"
     weight = 1
-  [[menus.main]]
-    name = "How we check"
-    url = "/how-we-check/"
+    [languages.en.params]
+      tagline = "Vermicompost facts you can check"
+      description = "Plain-language vermicompost guides. Every sentence links to its source and the exact words we relied on."
+    [[languages.en.menus.main]]
+      name = "Guides"
+      pageRef = "/articles"
+      weight = 1
+    [[languages.en.menus.main]]
+      name = "How we check"
+      pageRef = "/how-we-check"
+      weight = 2
+    [[languages.en.menus.main]]
+      name = "About"
+      pageRef = "/about"
+      weight = 3
+
+  [languages.hi]
+    label = "हिन्दी"
+    locale = "hi"
     weight = 2
-  [[menus.main]]
-    name = "About"
-    url = "/about/"
-    weight = 3
+    [languages.hi.params]
+      tagline = "वर्मीकम्पोस्ट के वे तथ्य जिन्हें आप जाँच सकें"
+      description = "सरल भाषा में वर्मीकम्पोस्ट गाइड। हर वाक्य अपने स्रोत और उन सटीक शब्दों से जुड़ा है जिन पर हमने भरोसा किया।"
+    [[languages.hi.menus.main]]
+      name = "गाइड"
+      pageRef = "/articles"
+      weight = 1
+    [[languages.hi.menus.main]]
+      name = "हम कैसे जाँचते हैं"
+      pageRef = "/how-we-check"
+      weight = 2
+    [[languages.hi.menus.main]]
+      name = "परिचय"
+      pageRef = "/about"
+      weight = 3
 
 [markup.goldmark.renderer]
   unsafe = false
