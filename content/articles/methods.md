@@ -1,6 +1,6 @@
 ---
 title: "Vermicomposting methods and bed systems"
-topic: "methods"
+topic: "system-types"
 status: approved
 draft: false
 updated: 2026-11-22
